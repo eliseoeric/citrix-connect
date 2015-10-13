@@ -1,23 +1,22 @@
 <?php 
 /**
-*	Beyond Philosophy Citrix Webinar Integration
+*	Citrix Connect for WordPress
 *	
-*	Wordpress Plugin intergrates Citirx Webinar Registration into 
-* 	The Beyond Philosophy Site.
+*	Allows integration of Citrix Webinars and Trainings Regisration for WordPress websites.
 *
 *
-*	@package	BPCW
+*	@package	CCWP
 *	@author 	Social Faucet <dev@socialfaucet.com>
 *	@license	GLP-2.0+
 *	@link 		http://socialfaucet.com
 *	@copyright	2015 Social Faucet
 *
 *	@wordpress-plugin
-*	Plugin Name: Beyond Philosophy Citrix Webinar Integration 
+*	Plugin Name: Citrix Connect for WP 
 *	Plugin URI: 
-*	Description: Allows integration of Citrix Webinars Regisration for Beyond Philosophy Website
+*	Description: Allows integration of Citrix Webinars and Trainings Regisration for WordPress websites.
 *	Version: 0.5
-*	Author: Think Generic
+*	Author: Social Faucet
 *	Author URI: http://www.socialfaucet.com
 */
 
