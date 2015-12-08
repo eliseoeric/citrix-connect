@@ -1,0 +1,11 @@
+{
+  "name": "citrix-connect",
+  "version": "1.0.0",
+  "description": "WordPress plugin to connect Citrix services to WordPress",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
