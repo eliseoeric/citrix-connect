@@ -1,4 +1,11 @@
 <?php
+/**
+
+	TODO:
+	- Figure out an elegant solutions for autolaoding everythign
+	- Second todo item
+
+**/
 
 /**
  * The plugin bootstrap file
@@ -67,9 +74,29 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-citrix-connect.php';
  * @since    1.0.0
  */
 function run_citrix_connect() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-autoloader.php';
+	// instantiate the loader
+	// dd(plugin_dir_path( __FILE__ ) . 'includes/Citrix');
+	$loader = new Psr4AutoloaderClass();
+	// register the autoloader
+	$loader->register();
 
+	// register the base directories for the namespace prefix
+	$loader->addNamespace('Citrix', plugin_dir_path( __FILE__ ) . 'includes/Citrix' );
+	// $loader->addNamespace('Foo\Bar', '/path/to/packages/foo-bar/tests');
 	$plugin = new Citrix_Connect();
 	$plugin->run();
 
 }
 run_citrix_connect();
+
+function dd( $var ) {
+	echo "<pre>";
+	var_dump( $var );
+	echo "</pre>";
+}
+
+function list_classes(){
+	dd(get_declared_classes());
+}
+// list_classes();

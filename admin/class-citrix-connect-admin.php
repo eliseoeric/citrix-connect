@@ -100,4 +100,12 @@ class Citrix_Connect_Admin {
 
 	}
 
+	public function cmb2_render_callback_for_text_password( $field, $escaped_value, $object_id, $object_type, $field_type_object ) {
+		echo $field_type_object->input( array( 'type' => 'password' ) );
+	}
+
+	public function cmb2_sanitize_text_password_callback( $override_value, $value ) {
+		return $value;
+	}
+
 }

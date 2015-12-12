@@ -6,126 +6,254 @@
 	- Second todo item
 
 **/
-
 namespace Citrix;
 
-abstract class ServiceAbstract {
-	private $errors = array();
+/**
+ * Provides common functionality for classes
+ * that get/post from/to Citrix APIs.
+ *
+ * @abstract
+ */
+abstract class ServiceAbstract
+{
 
-	private $params = array();
+  /**
+   * List of errors that have occured
+   * 
+   * @var array
+   */
+  private $errors = array();
 
-	private $url;
+  /**
+   * Params to be passed via POST or GET requests
+   * to Citrix APIs
+   *
+   * @var array
+   */
+  private $params = array();
 
-	private $response;
+  /**
+   * URL to be called
+   * 
+   * @var string
+   */
+  private $url;
 
-	private $httpMethod = 'POST';
+  /**
+   * Response from Citrix API call
+   * 
+   * @var array
+   */
+  private $response;
 
-	public function sendRequest( $oauthToken = null ) {
-		$url = $this->getUrl();
-		$ch = curl_init();
+  /**
+   * HTTP METHOD used - POST | GET
+   * 
+   * @var String
+   */
+  private $httpMethod = 'POST';
 
-		if( $this->getHttpMethod() == 'POST' ) {
-			curl_setopt($ch, CURLOPT_POST, true); //tell curl you want to post something
-			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode( $this->getParams())); //define what you want to post
-		} else {
-			$url = $this->getUrl();
-			$query = http_build_query( $this->getParams() );
-			$url = $url . '?' . $query;
-		}
+  /**
+   * Send API request, but pass the $oauthToken first.
+   * 
+   * @see \Citrix\Citrix
+   *
+   * @param string $oauthToken          
+   * @return \Citrix\ServiceAbstract
+   */
+  public function sendRequest($oauthToken = null)
+  {
+    $url = $this->getUrl();
+    $ch = curl_init(); // initiate curl
+    
+    if ($this->getHttpMethod() == 'POST') {
+      curl_setopt($ch, CURLOPT_POST, true); // tell curl you want to post something
+      curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($this->getParams())); // define what you want to post
+    } else {
+      $url = $this->getUrl();
+      $query = http_build_query($this->getParams());
+      $url = $url . '?' . $query;
+    }
+    
+    if (! is_null($oauthToken)) {
+      $headers = array(
+        'Content-Type: application/json',
+        'Accept: application/json',
+        'Authorization: OAuth oauth_token=' . $oauthToken
+      );
+      curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    }
+    
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // return the output in string format
+    $output = curl_exec($ch); // execute
+    curl_close($ch); // close curl handle
 
-		if( ! is_null( $oauthToken ) ) {
-			$headers = array( 
-				'Content-Type: application/json',
-				'Accpet: application/json',
-				'Authorization: OAuth oauth_token=' . $oauth_token
-			);
-			curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-		}
+    $this->setResponse($output);
+    return $this;
+  }
 
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); //return the output in string format
-		$output = curl_exec($ch); //execute
-		curl_close($ch); //close the curl handle
+  /**
+   * Have any errors occurred?
+   *
+   * @return boolean
+   */
+  public function hasErrors()
+  {
+    return empty($this->errors) ? false : true;
+  }
 
-		$this->setResponse( $output );
-		return $this;
-	}
+  /**
+   * Returns the first error
+   *
+   * @return mixed
+   */
+  public function getError()
+  {
+    $error = $this->errors;
+    $this->reset();
+    return empty($error) ? false : reset($error);
+  }
 
-	public function hasErrors() {
-		return empty( $this->errors ) ? false : true;
-	}
+  /**
+   * Get all errors
+   * 
+   * @return array
+   */
+  public function getErrors()
+  {
+    $error = $this->errors;
+    $this->reset();
+    return $error;
+  }
 
-	public function getError() {
-		$error = $this->errors;
-		$this->reset();
-		return empty( $error ) ? false : true;
-	}
+  /**
+   * Add a new error
+   *
+   * @param string $message
+   * @return \Citrix\ServiceAbstract
+   */
+  public function addError($message)
+  {
+    $this->errors[] = $message;
+    
+    return $this;
+  }
 
-	public function getErrors() {
-		$error = $this->errors;
-		$this->reset();
-		return $error;
-	}
+  /**
+   * Empty the list of errors
+   *
+   * @return \Citrix\ServiceAbstract
+   */
+  public function reset()
+  {
+    $this->errors = array();
+    
+    return $this;
+  }
 
-	public function addError( $message ) {
-		$this->errors[] = $message;
+  /**
+   *
+   * @return array $params
+   */
+  public function getParams()
+  {
+    return $this->params;
+  }
 
-		return $this;
-	}
+  /**
+   *
+   * @param array $params
+   * @return $this
+   */
+  public function setParams($params)
+  {
+    $this->params = $params;
+    
+    return $this;
+  }
 
-	public function reset() {
-		$this->errors = array();
+  /**
+   * Add a new param to be passed to API
+   *
+   * @param string $key
+   * @param string $value
+   * @return \Citrix\ServiceAbstract
+   */
+  public function addParam($key, $value)
+  {
+    $this->params[$key] = $value;
+    
+    return $this;
+  }
 
-		return $this;
-	}
+  /**
+   *
+   * @return string $url
+   */
+  public function getUrl()
+  {
+    return $this->url;
+  }
 
-	public function getParams() {
-		return $this->params;
-	}
+  /**
+   *
+   * @param string $url
+   * @return $this
+   */
+  public function setUrl($url)
+  {
+    $this->url = $url;
+    
+    return $this;
+  }
 
-	public function setParams( $params ) {
-		$this->params = $params;
+  /**
+   * Get the resposne
+   * @return array $response
+   */
+  public function getResponse()
+  {
+    return $this->response;
+  }
 
-		return $this;
-	}
+  /**
+   *
+   * @param array | string $response
+   * @return \Citrix\ServiceAbstract
+   */
+  public function setResponse($response)
+  {
+    if (is_object($response)) {
+      $this->response = $response;
+      return $this;
+    }
 
-	public function addParam( $key, $value ) {
-		$this->params[ $key ] = $value;
+    $this->response = (array) json_decode($response, true, 512, JSON_BIGINT_AS_STRING);
+    return $this;
+    
+  }
 
-		return $this;
-	}
+  /**
+   * Get the getHttpMethod
+   * @return string $httpMethod
+   */
+  public function getHttpMethod()
+  {
+    return $this->httpMethod;
+  }
 
-	public function getUrl() {
-		return $this->url;
-	}
-
-	public function setUrl( $url ) {
-		$this->url = $url;
-
-		return $this;
-	}
-
-	public function getResponse() {
-		return $this->response;
-	} 
-
-	public function setResponse( $response ) {
-		if( is_object( $response ) ) {
-			$this->response = $response;
-			return $this;
-		}
-
-		$this->response = (array) json_decode( $response, true, 512, JSON_BIGINT_AS_STRING );
-		return $this;
-	}
-
-	public function getHttpMethod() {
-		return $this->httpMethod;
-	}
-
-	public function setHttpMethod( $httpMethod ) {
-		$this->httpMethod = $httpMethod;
-
-		return $this;
-	}
+  /**
+   * Set the HttpMethod
+   * 
+   * @param string $httpMethod
+   *          - GET | POST
+   * @return \Citrix\ServiceAbstract
+   */
+  public function setHttpMethod($httpMethod)
+  {
+    $this->httpMethod = $httpMethod;
+    
+    return $this;
+  }
 }

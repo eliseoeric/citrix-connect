@@ -132,9 +132,10 @@ class Citrix_Connect {
 		**/
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/vendor/CMB2/init.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/Admin/abstract-admin-menu.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/Admin/class-citrix-connect-menu.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/Admin/class-testing-menu.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/abstract-admin-menu.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-citrix-connect-menu.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-webinar-menu.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-training-menu.php';
 
 		$this->loader = new Citrix_Connect_Loader();
 
@@ -171,6 +172,8 @@ class Citrix_Connect {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'cmb2_render_text_password', $plugin_admin, 'cmb2_render_callback_for_text_password', 10, 5);
+		$this->loader->add_action( 'cmb2_sanitize_text_email', $plugin_admin, 'cmb2_sanitize_text_email_callback', 10, 2);
 
 		$citrix_connect_menu = new Citrix_Connect_Menu();
 
@@ -180,11 +183,17 @@ class Citrix_Connect {
 
 		//Yeah this needs to be cleaned up, we can come up with some sort of autogen function or handler for this.
 
-		$testing_menu = new Testing_Menu();
+		$webinar_menu = new Webinar_Menu();
 
-		$this->loader->add_action( 'admin_init', $testing_menu, 'init' );
-		$this->loader->add_action( 'admin_menu', $testing_menu, 'add_options_page' );
-		$this->loader->add_action( 'cmb2_admin_init', $testing_menu, 'add_options_page_metabox' );
+		$this->loader->add_action( 'admin_init', $webinar_menu, 'init' );
+		$this->loader->add_action( 'admin_menu', $webinar_menu, 'add_options_page' );
+		$this->loader->add_action( 'cmb2_admin_init', $webinar_menu, 'add_options_page_metabox' );
+
+		$training_menu = new Training_Menu();
+
+		$this->loader->add_action( 'admin_init', $training_menu, 'init' );
+		$this->loader->add_action( 'admin_menu', $training_menu, 'add_options_page' );
+		$this->loader->add_action( 'cmb2_admin_init', $training_menu, 'add_options_page_metabox' );
 	}
 
 	/**
@@ -242,5 +251,4 @@ class Citrix_Connect {
 	public function get_version() {
 		return $this->version;
 	}
-
 }
