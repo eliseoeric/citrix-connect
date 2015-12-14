@@ -175,7 +175,7 @@ class Citrix_Connect {
 		$this->loader->add_action( 'cmb2_render_text_password', $plugin_admin, 'cmb2_render_callback_for_text_password', 10, 5);
 		$this->loader->add_action( 'cmb2_sanitize_text_email', $plugin_admin, 'cmb2_sanitize_text_email_callback', 10, 2);
 
-		$citrix_connect_menu = new Citrix_Connect_Menu();
+		$citrix_connect_menu = new \Citrix_Connect_Menu();
 
 		$this->loader->add_action( 'admin_init', $citrix_connect_menu, 'init' );
 		$this->loader->add_action( 'admin_menu', $citrix_connect_menu, 'add_options_page' );

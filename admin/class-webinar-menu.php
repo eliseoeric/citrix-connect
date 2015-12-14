@@ -1,7 +1,7 @@
 <?php
 // namespace Admin;
-
 // use Admin\Admin_Menu;
+// use Admin\Citrix\Webinar;
 
 class Webinar_Menu extends Admin_Menu {
 
@@ -32,14 +32,15 @@ class Webinar_Menu extends Admin_Menu {
 		$webinar_options = get_option( $this->key );
 		$client = new \Citrix\Authentication\Direct( $webinar_options['webinar_api'] );
 		$client->auth($webinar_options['webinar_username'], $webinar_options['webinar_password']);
-		dd($client);
+//		dd($client);
 		if($client->hasErrors()) {
 			throw new \Exception( $client->getError() );
 		}
 		// dd($client->getAccessToken());
 		$goToWebinar = new \Citrix\GoToWebinar( $client );
-		$webinars = $goToWebinar->getPast();
-		
+		$webinars = $goToWebinar->getUpcoming();
+//		dd( $webinars );
+
 
 	}
 
@@ -76,10 +77,40 @@ class Webinar_Menu extends Admin_Menu {
 			'type'    => 'text'
 		) );
 		$cmb->add_field( array(
+			'name'    => __( 'Access Token', 'citrix-connect' ),
+			'desc'    => __( 'GoToWebinar Access Token. Renews every 24 hours', 'citrix-connect' ),
+			'id'      => $this->prefix . 'access_token',
+			'type'    => 'text',
+			'attributes' => array(
+				'disabled' => 'disabled'
+			),
+			'default' => array( $this, 'webinar_define_access_token'),
+		) );
+		$cmb->add_field( array(
 			'name'    => __( 'Organization ID', 'citrix-connect' ),
 			'desc'    => __( 'GoToWebinar Organization ID', 'citrix-connect' ),
 			'id'      => $this->prefix . 'webinar_org_id',
 			'type'    => 'text'
 		) );
+	}
+
+	public function webinar_define_access_token( $field_args, $field ) {
+		//get the transient
+		$access = get_transient( 'webinar_access_token' );
+		//if transient is blank,
+		if( empty( $access ) ) {
+			$webinar_options = get_option( $this->key );
+			$client = new \Citrix\Authentication\Direct( $webinar_options['webinar_api'] );
+			$client->auth($webinar_options['webinar_username'], $webinar_options['webinar_password']);
+
+			if($client->hasErrors()) {
+				throw new \Exception( $client->getError() );
+			}
+
+			set_transient( 'webinar_access_token', $client->getAccessToken(), DAY_IN_SECONDS );
+			$access = get_transient( 'webinar_access_token' );
+		}
+		//otherwise use transient
+		return $access;
 	}
 }

@@ -1,7 +1,6 @@
 <?php
-// namespace Admin;
-
-// use Admin\Admin_Menu;
+//namespace Admin;
+//use Admin\Admin_Menu;
 
 class Training_Menu extends Admin_Menu {
 

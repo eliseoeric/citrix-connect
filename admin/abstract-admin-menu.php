@@ -6,7 +6,7 @@
 	- Add a text domain, and use it in this class
 
 **/
-// namespace Admin;
+//namespace Admin;
 
 abstract class Admin_Menu {
 
