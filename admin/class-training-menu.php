@@ -4,8 +4,6 @@
 
 class Training_Menu extends Admin_Menu {
 
-
-
 	public function __construct() {
 		$this->key = 'citrix-connect-training';
 		$this->parentKey = 'citrix-connect-config';

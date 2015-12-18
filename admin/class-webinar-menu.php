@@ -5,8 +5,6 @@
 
 class Webinar_Menu extends Admin_Menu {
 
-
-
 	public function __construct() {
 		$this->key = 'citrix-connect-webinar';
 		$this->parentKey = 'citrix-connect-config';

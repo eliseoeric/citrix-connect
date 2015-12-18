@@ -4,7 +4,7 @@ namespace Citrix\Authentication;
 
 /*
  * Wrapper class for all authentication methods.
- * It could be used for a single point of entry foo authentication functionality.
+ * It could be used for a single point of entry for authentication functionality.
  */
 class Client {
 

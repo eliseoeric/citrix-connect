@@ -64,6 +64,12 @@ class Citrix_Connect {
 	 */
 	protected $version;
 
+	protected $shortcodes;
+
+	protected $post_types;
+
+	protected $metaboxes;
+
 	/**
 	 * Define the core functionality of the plugin.
 	 *
@@ -83,6 +89,11 @@ class Citrix_Connect {
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 
+		$this->shortcodes = array(
+			'webinar_title',
+		);
+		$this->post_types = array();
+		$this->metaboxes = array();
 	}
 
 	/**

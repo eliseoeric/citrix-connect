@@ -16,22 +16,55 @@ class WebinarClient {
     }
 
     public function auth() {
-        $client = new \Citrix\Authentication\Direct( $this->getApiKey() );
-        $client->auth( $this->getUsername(), $this->getPassword() );
+        //Get the client for transient
+        $client = get_transient( 'goToWebinarClient' );
 
-        if($client->hasErrors()) {
-            throw new \Exception( $client->getError() );
-        }
+        //Check if transient exists
+        if( false === $client ) {
+            //If not - create new client and store it
+            $client = new \Citrix\Authentication\Direct( $this->getApiKey() );
+            $client->auth( $this->getUsername(), $this->getPassword() );
+
+            if($client->hasErrors()) {
+                throw new \Exception( $client->getError() );
+            }   
+
+            set_transient( 'goToWebinarClient', $client, DAY_IN_SECONDS );
+        }    
 
         return $client;
     }
 
     public function getTitle( $id ) {
+        $goToWebinar = new GoToWebinar( $this->client );
+
+        $webinar = $goToWebinar->getWebinar( $id );
+        $title = $webinar['subject'];
+
+        return $title;
 
     }
 
-    public function getUpcomming() {
+    public function getRegistrationUrl( $id ) {
+        $goToWebinar = new GoToWebinar( $this->client );
 
+        $webinar = $goToWebinar->getWebinar( $id );
+        $url = $webinar['registrationurl'];
+
+        return $url;
+    }
+
+    public function getTimes( $id ) {
+        $goToWebinar = new GoToWebinar( $this->client );
+
+        $webinar = $goToWebinar->getWebinar( $id );
+        $time = $webinar['times'];
+
+        return $times;
+    }
+
+    public function getUpcomming() {
+        
     }
 
     public function getDescription( $id ) {
