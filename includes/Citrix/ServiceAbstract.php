@@ -261,7 +261,7 @@ abstract class ServiceAbstract
        */
       $max_int_length = strlen((string) PHP_INT_MAX) - 1;
       $json_without_bigints = preg_replace('/:\s*(-?\d{'.$max_int_length.',})/', ': "$1"', $response);
-      $this->response = (array) json_decode($json_without_bigints);
+      $this->response = (array) json_decode($json_without_bigints, true);
     }
     return $this;
     

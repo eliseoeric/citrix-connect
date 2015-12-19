@@ -245,7 +245,7 @@ class GoToWebinar extends ServiceAbstract implements CitrixApiAware
       }
     } else {
       $collection = new \ArrayObject(array());
-
+      
       foreach ($response as $entity){
         if(isset($entity['webinarKey'])){
           $webinar = new Webinar($this->getClient());
