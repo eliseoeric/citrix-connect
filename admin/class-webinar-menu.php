@@ -1,7 +1,7 @@
 <?php
 // namespace Admin;
 // use Admin\Admin_Menu;
-// use Admin\Citrix\Webinar;
+// use Admin\Citrix\WebinarClient;
 
 class Webinar_Menu extends Admin_Menu {
 
@@ -25,21 +25,56 @@ class Webinar_Menu extends Admin_Menu {
 		parent::add_options_page();
 	}
 
+	// Please note that this debug does not cache the retrieved data.
 	public function admin_page_display_debug() {
-		//lets test
-		$webinar_options = get_option( $this->key );
-		$client = new \Citrix\Authentication\Direct( $webinar_options['webinar_api'] );
-		$client->auth($webinar_options['webinar_username'], $webinar_options['webinar_password']);
-//		dd($client);
-		if($client->hasErrors()) {
-			throw new \Exception( $client->getError() );
+		wp_enqueue_script( 'datatables' );
+		wp_enqueue_style( 'datatables' );
+		wp_enqueue_script( 'cc_datatables' );
+		$webinar = new WebinarClient();
+		$upcomming = $webinar->getUpcomming();
+
+		if( empty( $upcomming ) ) {
+			$message = "<p class='error'>There are no upcomming webinars at the moment.</p>";
+		} else {
+			$message = "<p>Below is a list of the upcoming webinars, to ensure that Citrix Connect WP is connecting to GoToWebinar.</p>";
 		}
-		// dd($client->getAccessToken());
-		$goToWebinar = new \Citrix\GoToWebinar( $client );
-		$webinars = $goToWebinar->getUpcoming();
-//		dd( $webinars );
 
+		echo "<h2>Webinar Debug</h2>";
+		echo $message;
 
+		if( count( $upcomming ) > 0 )
+		{
+			echo "<div class='upcomming-data-table'>";
+			echo '<table data-order=\'[[ 3, "desc" ]]\'>';
+			echo '<thead>';
+			echo '<tr>';
+			echo '<th>ID</th>';
+			echo '<th>Title</th>';
+			echo '<th>Start Time</th>';
+			echo '<th>End Time</th>';
+			echo '<th>URL</th>';
+			echo '</tr>';
+			echo '</thead>';
+			echo '<tbody>';
+
+			foreach ( $upcomming as $webinar )
+			{
+//				dd($webinar);
+				$start = date('Y-m-d', strtotime($webinar->times[0]['startTime']));
+				$end = date('Y-m-d', strtotime($webinar->times[0]['endTime']));
+
+				echo '<tr>';
+				echo '<td>' . $webinar->id . '</td>';
+				echo '<td>' . $webinar->subject . '</td>';
+				echo '<td>' . $start . '</td>';
+				echo '<td>' . $end . '</td>';
+				echo '<td><a href="' . $webinar->registrationUrl . '">Registration Url</a></td>';
+				echo '</tr>';
+			}
+			echo '</tbody>';
+			echo '</table>';
+			echo '</div>';
+		}
 	}
 
 	public function add_options_page_metabox() {
@@ -75,40 +110,10 @@ class Webinar_Menu extends Admin_Menu {
 			'type'    => 'text'
 		) );
 		$cmb->add_field( array(
-			'name'    => __( 'Access Token', 'citrix-connect' ),
-			'desc'    => __( 'GoToWebinar Access Token. Renews every 24 hours', 'citrix-connect' ),
-			'id'      => $this->prefix . 'access_token',
-			'type'    => 'text',
-			'attributes' => array(
-				'disabled' => 'disabled'
-			),
-			'default' => array( $this, 'webinar_define_access_token'),
-		) );
-		$cmb->add_field( array(
 			'name'    => __( 'Organization ID', 'citrix-connect' ),
 			'desc'    => __( 'GoToWebinar Organization ID', 'citrix-connect' ),
 			'id'      => $this->prefix . 'webinar_org_id',
 			'type'    => 'text'
 		) );
-	}
-
-	public function webinar_define_access_token( $field_args, $field ) {
-		//get the transient
-		$access = get_transient( 'webinar_access_token' );
-		//if transient is blank,
-		if( empty( $access ) ) {
-			$webinar_options = get_option( $this->key );
-			$client = new \Citrix\Authentication\Direct( $webinar_options['webinar_api'] );
-			$client->auth($webinar_options['webinar_username'], $webinar_options['webinar_password']);
-
-			if($client->hasErrors()) {
-				throw new \Exception( $client->getError() );
-			}
-
-			set_transient( 'webinar_access_token', $client->getAccessToken(), DAY_IN_SECONDS );
-			$access = get_transient( 'webinar_access_token' );
-		}
-		//otherwise use transient
-		return $access;
 	}
 }

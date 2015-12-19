@@ -41,6 +41,12 @@ class Citrix_Connect_Loader {
 	 */
 	protected $filters;
 
+	protected $shortcodes;
+
+	protected $post_types;
+
+	protected $metaboxes;
+
 	/**
 	 * Initialize the collections used to maintain the actions and filters.
 	 *
@@ -50,6 +56,17 @@ class Citrix_Connect_Loader {
 
 		$this->actions = array();
 		$this->filters = array();
+
+		$this->shortcodes = array(
+			'webinar_title',
+		);
+		$this->post_types = array(
+			'webinar_pt',
+			'courses_pt'
+		);
+		$this->metaboxes = array(
+			'webinar_mb'
+		);
 
 	}
 
@@ -109,6 +126,15 @@ class Citrix_Connect_Loader {
 
 	}
 
+	private function register_types() {
+		$hook_manager = new Hook_Manager();
+
+		$hook_manager->register_posts( $this->post_types );
+		$hook_manager->register_shortcodes( $this->shortcodes );
+		$hook_manager->register_metaboxes( $this->metaboxes );
+		add_action('add_meta_boxes', 'add_registrants_metabox');
+	}
+
 	/**
 	 * Register the filters and actions with WordPress.
 	 *
@@ -123,6 +149,8 @@ class Citrix_Connect_Loader {
 		foreach ( $this->actions as $hook ) {
 			add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
 		}
+
+		$this->register_types();
 
 	}
 

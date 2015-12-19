@@ -64,12 +64,6 @@ class Citrix_Connect {
 	 */
 	protected $version;
 
-	protected $shortcodes;
-
-	protected $post_types;
-
-	protected $metaboxes;
-
 	/**
 	 * Define the core functionality of the plugin.
 	 *
@@ -88,12 +82,6 @@ class Citrix_Connect {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-
-		$this->shortcodes = array(
-			'webinar_title',
-		);
-		$this->post_types = array();
-		$this->metaboxes = array();
 	}
 
 	/**
@@ -143,10 +131,13 @@ class Citrix_Connect {
 		**/
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/vendor/CMB2/init.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-citrix-hook-manager.php';
+
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/abstract-admin-menu.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-citrix-connect-menu.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-webinar-menu.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-training-menu.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/Citrix/WebinarClient.php';
 
 		$this->loader = new Citrix_Connect_Loader();
 

@@ -83,6 +83,7 @@ function run_citrix_connect() {
 
 	// register the base directories for the namespace prefix
 	$loader->addNamespace('Citrix', plugin_dir_path( __FILE__ ) . 'includes/Citrix' );
+//	$loader->addNamespace('Admin/Citrix', plugin_dir_path( __FILE__ ) . 'admin/Citrix' );
 	// $loader->addNamespace('Foo\Bar', '/path/to/packages/foo-bar/tests');
 	$plugin = new Citrix_Connect();
 	$plugin->run();

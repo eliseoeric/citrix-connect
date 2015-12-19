@@ -1,4 +1,5 @@
 <?php
+//namespace Admin;
 
 /**
  * The admin-specific functionality of the plugin.
@@ -74,6 +75,7 @@ class Citrix_Connect_Admin {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/citrix-connect-admin.css', array(), $this->version, 'all' );
+		wp_register_style( 'datatables', '//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css' );
 
 	}
 
@@ -97,6 +99,8 @@ class Citrix_Connect_Admin {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/citrix-connect-admin.js', array( 'jquery' ), $this->version, false );
+		wp_register_script( 'datatables', '//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js', array( 'jquery' ), '1.0', true );
+		wp_register_script( 'cc_datatables', plugin_dir_url( __FILE__ ) . 'js/citrix-connect-datatables.js', array(), '1.0', true );
 
 	}
 

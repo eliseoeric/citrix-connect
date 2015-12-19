@@ -1,7 +1,7 @@
 <?php
-// namespace Admin;
+//namespace Admin;
 
-// use Admin\Admin_Menu;
+//use Admin\Admin_Menu;
 /**
 
 	TODO:
