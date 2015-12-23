@@ -25,11 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="webinar_registration.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/includes/shortcodes/webinar_registration.php">
+      <file leaf-file-name="Direct.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/includes/Citrix/Auth/Direct.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.41860464" vertical-offset="4" max-vertical-offset="1050">
-              <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
+            <state vertical-scroll-proportion="-1.4534883" vertical-offset="1800" max-vertical-offset="2750">
+              <caret line="24" column="51" selection-start-line="24" selection-start-column="51" selection-end-line="24" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -67,6 +67,8 @@
         <option value="$PROJECT_DIR$/admin/Citrix/WebinarClient.php" />
         <option value="$PROJECT_DIR$/includes/shortcodes/webinar_title.php" />
         <option value="$PROJECT_DIR$/includes/shortcodes/webinar_registration.php" />
+        <option value="$PROJECT_DIR$/includes/Citrix/GoToTraining.php" />
+        <option value="$PROJECT_DIR$/includes/Citrix/Auth/Direct.php" />
       </list>
     </option>
   </component>
@@ -204,6 +206,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Citrix" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="citrix-connect" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="citrix-connect" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="includes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Citrix" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Auth" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -420,13 +444,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1500" max-vertical-offset="4900">
           <caret line="77" column="39" selection-start-line="77" selection-start-column="39" selection-end-line="77" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/Citrix/Auth/Client.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="967">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -650,6 +667,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.705074" vertical-offset="5808" max-vertical-offset="7300">
           <caret line="265" column="0" selection-start-line="265" selection-start-column="0" selection-end-line="265" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -735,10 +753,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/includes/shortcodes/webinar_title.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36997885" vertical-offset="0" max-vertical-offset="1050">
+          <caret line="14" column="10" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
+          <folding>
+            <marker date="1450844437307" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450844437307" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450844437307" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450844437307" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450844437307" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/shortcodes/webinar_registration.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6564482" vertical-offset="4" max-vertical-offset="1050">
+          <caret line="25" column="33" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
+          <folding>
+            <marker date="1450844562169" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450844562169" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450844562169" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450844562169" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450844562169" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/includes/Citrix/GoToWebinar.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26955602" vertical-offset="2270" max-vertical-offset="6775">
-          <caret line="103" column="132" selection-start-line="103" selection-start-column="132" selection-end-line="103" selection-end-column="132" />
+        <state vertical-scroll-proportion="0.68710357" vertical-offset="2025" max-vertical-offset="6775">
+          <caret line="109" column="32" selection-start-line="103" selection-start-column="4" selection-end-line="109" selection-end-column="32" />
           <folding>
             <marker date="1450844134819" expanded="false" signature="-1:-1" placeholder="..." />
             <marker date="1450844134819" expanded="true" signature="-1:-1" placeholder=" Use this to get/post data from/to Citrix. ..." />
@@ -809,9 +855,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/includes/Citrix/GoToTraining.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7885835" vertical-offset="629" max-vertical-offset="3425">
+          <caret line="57" column="36" selection-start-line="57" selection-start-column="36" selection-end-line="57" selection-end-column="36" />
+          <folding>
+            <marker date="1450845134123" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder=" Use this to get/post data from/to Citrix. ..." />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder=" Authentication Client ..." />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder=" Begin here by passing an authentication class. ..." />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder=" Each class that makes calls to ..." />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450845134123" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/admin/Citrix/WebinarClient.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36997885" vertical-offset="700" max-vertical-offset="3125">
+        <state vertical-scroll-proportion="0.92494714" vertical-offset="175" max-vertical-offset="3125">
           <caret line="42" column="35" selection-start-line="42" selection-start-column="35" selection-end-line="42" selection-end-column="35" />
           <folding>
             <marker date="1450844154478" expanded="true" signature="-1:-1" placeholder="..." />
@@ -837,24 +921,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/includes/shortcodes/webinar_title.php">
+    <entry file="file://$PROJECT_DIR$/includes/Citrix/Auth/Client.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36997885" vertical-offset="0" max-vertical-offset="1050">
-          <caret line="14" column="10" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
+        <state vertical-scroll-proportion="0.29069766" vertical-offset="0" max-vertical-offset="946">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding>
-            <marker date="1450844437307" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1450844437307" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1450844437307" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1450844437307" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1450844437307" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450016836687" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450016836687" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450016836687" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450016836687" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450016836687" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/includes/shortcodes/webinar_registration.php">
+    <entry file="file://$PROJECT_DIR$/includes/Citrix/Auth/Direct.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41860464" vertical-offset="4" max-vertical-offset="1050">
-          <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
+        <state vertical-scroll-proportion="-1.4534883" vertical-offset="1800" max-vertical-offset="2750">
+          <caret line="24" column="51" selection-start-line="24" selection-start-column="51" selection-end-line="24" selection-end-column="51" />
           <folding />
         </state>
       </provider>

@@ -39,7 +39,7 @@ class Direct extends ServiceAbstract implements CitrixApiAware {
 
 		$params = array(
 			'grant_type' => 'password',
-			'user_id' => $username;
+			'user_id' => $username,
 			'password' => $password,
 			'client_id' => $this->getApiKey()
 		);
@@ -84,7 +84,7 @@ class Direct extends ServiceAbstract implements CitrixApiAware {
 		return $this->accessToken;
 	}
 
-	public function setAccessToken() {
+	public function setAccessToken( $accessToken ) {
 		$this->accessToken = $accessToken;
 
 		return $this;
