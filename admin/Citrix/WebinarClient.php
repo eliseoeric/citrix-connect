@@ -38,10 +38,9 @@ class WebinarClient {
     }
 
     public function getTitle( $webinar_id ) {
-
         $webinar = $this->getTransientWebinar( 'webinar_trans_' . $webinar_id, $webinar_id );
 
-        $title = $webinar['subject'];
+        $title = $webinar->subject;
 
         return $title;
 
@@ -92,9 +91,8 @@ class WebinarClient {
 
     }
 
-    public function getTransientWebinar( $webinar_id, $trasient_key ) {
+    public function getTransientWebinar( $trasient_key, $webinar_id ) {
         $webinar = get_transient( $trasient_key );
-
         if( false === $webinar ) {
             $goToWebinar = new GoToWebinar( $this->client );
             $webinar = $goToWebinar->getWebinar( $webinar_id );

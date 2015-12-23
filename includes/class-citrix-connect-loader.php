@@ -133,6 +133,7 @@ class Citrix_Connect_Loader {
 		$hook_manager->register_shortcodes( $this->shortcodes );
 		$hook_manager->register_metaboxes( $this->metaboxes );
 		add_action('add_meta_boxes', 'add_registrants_metabox');
+
 	}
 
 	/**
