@@ -22,6 +22,9 @@ class GoToTraining extends ServiceAbstract implements CitrixApiAware
      */
     private $client;
 
+    //Root api url;
+    private $apiUrl;
+
     /**
      * Begin here by passing an authentication class.
      *
@@ -30,6 +33,7 @@ class GoToTraining extends ServiceAbstract implements CitrixApiAware
     public function __construct($client)
     {
         $this->setClient($client);
+        $this->apiUrl = 'https://api.citrixonline.com/G2T/rest/';
     }
 
     public function getUpcoming()
@@ -38,18 +42,28 @@ class GoToTraining extends ServiceAbstract implements CitrixApiAware
     }
 
     public function getTrainings()
-    {
+    {   
+        $organizerKey = $this->getClient()->getOrganizerKey();
+        $url = $this->getApiUrl() . "organizers/{$organizerKey}/trainings";
 
+        $this->setHttpMethod( 'GET' )
+            ->setUrl( $url )
+            ->sendRequest( $this->getClient()->getAccessToken() )
+            ->processResponse();
+
+        return $this->getResponse();
     }
 
     public function getPast()
     {
+        $since = date( DATE_ISO8601, mktime( 0, 0, 0, 7, 1, 2000 ) );
+        $until = date( DATE_ISO8601 );
 
     }
 
     public function getTraining( $trainingKey )
     {
-        $url = 'https://api.citrixonline.com/G2T/rest/organizers/' . $this->getClient()->getOrganizerKey() . '/trainings/' . $trainingKey;
+        $url = $this->getApiUrl() . 'organizers/' . $this->getClient()->getOrganizerKey() . '/trainings/' . $trainingKey;
         $this->setHttpMethod('GET')
             ->setUrl($url)
             ->sendRequest($this->getClient()->getAccessToken())
@@ -63,23 +77,88 @@ class GoToTraining extends ServiceAbstract implements CitrixApiAware
 
     }
 
-    public function getRegistrants()
+    public function getRegistrants( $trainingKey )
+    {   
+        $organizerKey = $this->getClient()->getOrganizerKey();
+        $url = $this->getApiUrl . "organizers/{$organizerKey}/trainings/{$trainingKey}/registrants";
+        
+        $this->setHttpMethod( 'GET' )
+            ->setUrl( $url )
+            ->setRequest( $this->getClient()->getAccessToken() )
+            ->processResponse();
+
+        return $this->getResponse();
+    }
+
+    public function getRegistrant( $trainingKey, $registrantKey )
+    {   
+        $organizerKey = $this->getClient()->getOrganizerKey();
+        $url = "organizers/{$organizerKey}/trainings/{$trainingKey}/registrants/{$registrantKey}";
+
+        $this->setHttpMethod( 'GET' )
+            ->setUrl( $url )
+            ->sendRequest( $this->getClient()->getAccessToken() )
+            ->processResponse( true );
+
+        return $this->getResponse();
+    }
+
+    public function getOnlineRecordings( $trainingKey )
+    {
+        $url = $this->getApiUrl() . "trainings/{$trainingKey}/recordings";
+
+        $this->setHttpMethod( 'GET' )
+            ->setUrl( $url )
+            ->sendRequest( $this->getClient()->getAccessToken() )
+            ->processResponse( true );
+
+        return $this->getResponse();
+    }
+
+    public function getOnlineRecordingDownload()
     {
 
     }
 
-    public function register()
-    {
+    /**
+   * Register user for a training
+   * 
+   * @param int $trainingKey
+   * @param array $registrantData - email, firstName, lastName (required)
+   * @return \Citrix\GoToTraining
+   */
+    public function register( $trainingKey, $registrantData )
+    {   
+        $organizerKey = $this->getClient()->getOrganizerKey();
+        $url = $this->getApiUrl() . "organizers/{$organizerKey}/trainings/{$trainingKey}/registrants";
 
+        $this->setHttpMethod('POST')
+            ->setUrl( $url )
+            ->setParams( $registrantData )
+            ->sendRequest( $this->getClient()->getAccessToken() )
+            ->processResponse();
     }
 
     public function getClient() {
-
+        return $this->client;
     }
 
-    public function setClient()
+    public function setClient( $client )
     {
+        $this->client = $client;
 
+        return $this;
+    }
+
+    public function getApiUrl()
+    {
+        return $this->apiUrl;
+    }
+
+    public function setApiUrl( $apiUrl )
+    {
+        $this->apiUrl = $apiUrl;
+        return $this;
     }
 
     /**
