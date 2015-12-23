@@ -1,7 +1,7 @@
 <?php
 function register_webinars() {
     // creating (registering) the custom type
-    register_post_type( 'webinar', /* (http://codex.wordpress.org/Function_Reference/register_post_type) */
+    register_post_type( 'citrix_webinar', /* (http://codex.wordpress.org/Function_Reference/register_post_type) */
         // let's now add all the options for this post type
         array ( 'labels'              => array (
             'name'               => __( 'Webinars', 'citirx-connect' ), /* This is the Title of the Group */
@@ -26,9 +26,9 @@ function register_webinars() {
                 'query_var'           => true,
                 'menu_position'       => 8, /* this is what order you want it to appear in on the left hand side menu */
                 'menu_icon'           => 'dashicons-images-alt2', /* the icon for the custom post type menu */
-//                'rewrite'             => array ( 'slug' => 'webinar', 'with_front' => false ), /* you can specify its url slug */
+               'rewrite'             => array ( 'slug' => 'webinar', 'with_front' => false ), /* you can specify its url slug */
                 'has_archive'         => 'webinar', /* you can rename the slug here */
-                'capability_type'     => 'page',
+                'capability_type'     => 'post',
                 'hierarchical'        => false,
             /* the next one is important, it tells what's enabled in the post editor */
                 'supports'            => array ( 'title', 'editor', 'thumbnail', 'excerpt' )
@@ -36,7 +36,7 @@ function register_webinars() {
     ); /* end of register post type */
 
     /* this adds your post categories to your custom post type */
-     register_taxonomy_for_object_type( 'category', 'webinar' );
+     register_taxonomy_for_object_type( 'category', 'citrix_webinar' );
 
 }
 

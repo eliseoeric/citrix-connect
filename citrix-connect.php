@@ -91,11 +91,14 @@ function run_citrix_connect() {
 }
 run_citrix_connect();
 
-function dd( $var ) {
-	echo "<pre>";
-	var_dump( $var );
-	echo "</pre>";
+if( ! function_exists( dd ) ) {
+	function dd( $var ) {
+		echo "<pre>";
+		var_dump( $var );
+		echo "</pre>";
+	}
 }
+
 
 function list_classes(){
 	dd(get_declared_classes());

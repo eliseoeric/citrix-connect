@@ -15,7 +15,7 @@ function webinar_mb( $meta_boxes ) {
         array(
             'id'         => 'webinar-data',
             'title'      => 'Webinar Details',
-            'object_types'      => array( 'webinar' ),
+            'object_types'      => array( 'citrix_webinar' ),
             'show_on'    =>
                 array(
 //                    'key' => 'page-template',
@@ -63,7 +63,7 @@ function add_registrants_metabox() {
         'webinar_registrants',
         'Webinar Registrants',
         'render_add_registrants_metabox',
-        'webinar'
+        'citrix_webinar'
     );
 }
 

@@ -28,7 +28,7 @@ function register_courses() {
                 'menu_icon'           => 'dashicons-welcome-learn-more', /* the icon for the custom post type menu */
 //                'rewrite'             => array ( 'slug' => 'webinar', 'with_front' => false ), /* you can specify its url slug */
                 'has_archive'         => 'course', /* you can rename the slug here */
-                'capability_type'     => 'page',
+                'capability_type'     => 'post',
                 'hierarchical'        => false,
             /* the next one is important, it tells what's enabled in the post editor */
                 'supports'            => array ( 'title', 'editor', 'thumbnail', 'excerpt' )
