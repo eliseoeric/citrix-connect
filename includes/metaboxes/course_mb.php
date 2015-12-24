@@ -8,14 +8,14 @@
 // tabs section -- this could just be from elegant tabs
 // featured image
 // similar webinars
-function webinar_mb( $meta_boxes ) {
+function course_mb( $meta_boxes ) {
     $prefix = "";
 
     $webinar = new_cmb2_box(
         array(
-            'id'         => 'webinar-data',
-            'title'      => 'Webinar Details',
-            'object_types'      => array( 'citrix_webinar' ),
+            'id'         => 'course-data',
+            'title'      => 'Course Details',
+            'object_types'      => array( 'citrix_training' ),
             'show_on'    =>
                 array(
 //                    'key' => 'page-template',
@@ -27,58 +27,35 @@ function webinar_mb( $meta_boxes ) {
         )
     );
     $webinar->add_field( array(
-        'name' => 'Webinar Key',
+        'name' => 'Training Key',
 //        'desc' => 'Extra content that is below the hero',
-        'id' => $prefix . 'webinar_key',
+        'id' => $prefix . 'training_key',
         'type' => 'text',
         'options' => array()
     ) );
-
-//    $webinar_meta = new_cmb2_box(
-//        array(
-//            'id'         => 'webinar-data',
-//            'title'      => 'Webinar Information',
-//            'object_types'      => array( 'webinar' ),
-//            'show_on'    =>
-//                array(
-////                    'key' => 'page-template',
-////                    'value' => array('template-location.php','template-events.php','template-reviews.php')
-//                ),
-//            'context'    => 'normal',
-//            'priority'   => 'high',
-//            'show_names' => true,
-//        )
-//    );
-//    $webinar_meta->add_field( array(
-//        'name' => 'Content',
-//        'desc' => 'Extra content that is below the hero',
-//        'id' => $prefix . 'extra_content',
-//        'type' => 'wysiwyg',
-//        'options' => array()
-//    ) );
 }
 
-function webinar_add_registrants_metabox() {
+function training_add_registrants_metabox() {
     add_meta_box(
-        'webinar_registrants',
-        'Webinar Registrants',
-        'webinar_render_add_registrants_metabox',
-        'citrix_webinar'
+        'training_registrants',
+        'Training Registrants',
+        'training_render_add_registrants_metabox',
+        'citrix_training'
     );
 }
 
-function webinar_render_add_registrants_metabox( $post ) {
+function training_render_add_registrants_metabox( $post ) {
     wp_enqueue_script( 'datatables' );
     wp_enqueue_style( 'datatables' );
     wp_enqueue_script( 'cc_datatables' );
-    $webinarClient = new WebinarClient();
-    $registrants = $webinarClient->getRegistrants( get_post_meta( $post->ID, 'webinar_key', true) );
+    $trainingClient = new TrainingClient();
+    $registrants = $trainingClient->getRegistrants( get_post_meta( $post->ID, 'training_key', true) );
 //    dd($registrants);
 
     if( empty( $registrants ) ) {
         $message = "<p class='error'>There are currently no registrants in the system.</p>";
     } else {
-        $message = "<p>Below is a list of current registrants for this webinar.</p>";
+        $message = "<p>Below is a list of current registrants for this Training Session.</p>";
     }
 
 //    echo "<h2>Registrants</h2>";

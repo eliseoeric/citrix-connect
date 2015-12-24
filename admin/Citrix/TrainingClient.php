@@ -46,6 +46,45 @@ class TrainingClient
 		return $trainings;
 	}
 
+	public function getTimes( $training_id ) {
+        $training = $this->getTransientTraining( 'training_trans_' . $training_id, $training_id );
+        $times = $training['times'];
+
+        return $times;
+    }
+
+    public function getTitle( $training_id ) {
+        $training = $this->getTransientTraining( 'training_trans_' . $training_id, $training_id );
+
+        $title = $training->name;
+
+        return $title;
+
+    }
+
+    public function getDescription( $training_id ) {
+        $training = $this->getTransientTraining( 'training_trans_' . $training_id, $training_id );
+        $desc = $training['description'];
+
+        return $desc;
+    }
+
+    public function getStartDate( $id ) {
+
+    }
+
+    public function isPast( $id ) {
+
+    }
+
+    public function getRegistrants( $training_id ) {
+        $goToTraining = new GoToTraining( $this->client );
+
+        $registrants = $goToTraining->getRegistrants( $training_id );
+
+        return $registrants;
+    }
+
 	public function getTransientTraining( $trasient_key, $training_id ) {
 		$training = get_transient( $trasient_key );
 		if( false === $training ) {

@@ -92,24 +92,33 @@ class Training_Menu extends Admin_Menu {
 			echo '<th>Title</th>';
 			echo '<th>Start Time</th>';
 			echo '<th>End Time</th>';
-			echo '<th>URL</th>';
+			echo '<th>Organizers</th>';
 			echo '</tr>';
 			echo '</thead>';
 			echo '<tbody>';
 
 			foreach ( $trainings as $training )
 			{
-//				dd($webinar);
-				$start = date('Y-m-d', strtotime($training->times[0]['startTime']));
-				$end = date('Y-m-d', strtotime($training->times[0]['endTime']));
+				// dd($training);
+				$start = date('Y-m-d', strtotime($training->times[0]['startDate']));
+				$end = date('Y-m-d', strtotime($training->times[0]['endDate']));
 
-				echo '<tr>';
-				echo '<td>' . $training->id . '</td>';
-				echo '<td>' . $training->name . '</td>';
-				echo '<td>' . $start . '</td>';
-				echo '<td>' . $end . '</td>';
-				echo '<td><a href="' . $training->registrationUrl . '">Registration Url</a></td>';
-				echo '</tr>';
+				$organizers_parsed = "";
+				foreach ($training->organizers as $organizer) {
+					$organizers_parsed .= "<a href='mailto:" . $organizer->email . "'>" .$organizer['givenName'] . ' ' . $organizer['surname'] . "</a> ";
+				}
+
+				foreach( $training->times as $session ) 
+				{
+					echo '<tr>';
+					echo '<td>' . $training->id . '</td>';
+					echo '<td>' . $training->name . '</td>';
+					echo '<td>' . date('Y-m-d', strtotime($session['startDate'])) . '</td>';
+					echo '<td>' . date('Y-m-d', strtotime($session['endDate'])) . '</td>';
+					echo '<td>' . $organizers_parsed . '</td>';
+					echo '</tr>';
+				}
+				
 			}
 			echo '</tbody>';
 			echo '</table>';
