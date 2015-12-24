@@ -10,6 +10,8 @@ class Training_Menu extends Admin_Menu {
 		$this->metabox_id = 'citrix-connect-training-metabox';
 		$this->prefix = '';
 		$this->title = __( 'Training Connect', 'citrix-connect' );
+
+		add_action( 'admin_page_display_debug_' . $this->key, array( $this, 'admin_page_display_debug' ) );
 	}
 
 	public function add_options_page() {
@@ -60,5 +62,58 @@ class Training_Menu extends Admin_Menu {
 			'id'      => $this->prefix . 'training_org_id',
 			'type'    => 'text'
 		) );
+	}
+
+
+	// Please note that this debug does not cache the retrieved data.
+	public function admin_page_display_debug() {
+		wp_enqueue_script( 'datatables' );
+		wp_enqueue_style( 'datatables' );
+		wp_enqueue_script( 'cc_datatables' );
+		$training = new TrainingClient();
+		$trainings = $training->getTrainings();
+
+		if( empty( $trainings ) ) {
+			$message = "<p class='error'>There are no upcomming webinars at the moment.</p>";
+		} else {
+			$message = "<p>Below is a list of the upcoming webinars, to ensure that Citrix Connect WP is connecting to GoToWebinar.</p>";
+		}
+
+		echo "<h2>Training Debug</h2>";
+		echo $message;
+
+		if( count( $trainings ) > 0 )
+		{
+			echo "<div class='upcomming-data-table'>";
+			echo '<table data-order=\'[[ 3, "desc" ]]\'>';
+			echo '<thead>';
+			echo '<tr>';
+			echo '<th>ID</th>';
+			echo '<th>Title</th>';
+			echo '<th>Start Time</th>';
+			echo '<th>End Time</th>';
+			echo '<th>URL</th>';
+			echo '</tr>';
+			echo '</thead>';
+			echo '<tbody>';
+
+			foreach ( $trainings as $training )
+			{
+//				dd($webinar);
+				$start = date('Y-m-d', strtotime($training->times[0]['startTime']));
+				$end = date('Y-m-d', strtotime($training->times[0]['endTime']));
+
+				echo '<tr>';
+				echo '<td>' . $training->id . '</td>';
+				echo '<td>' . $training->name . '</td>';
+				echo '<td>' . $start . '</td>';
+				echo '<td>' . $end . '</td>';
+				echo '<td><a href="' . $training->registrationUrl . '">Registration Url</a></td>';
+				echo '</tr>';
+			}
+			echo '</tbody>';
+			echo '</table>';
+			echo '</div>';
+		}
 	}
 }

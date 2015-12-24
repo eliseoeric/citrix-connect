@@ -138,6 +138,7 @@ class Citrix_Connect {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-webinar-menu.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-training-menu.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/Citrix/WebinarClient.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/Citrix/TrainingClient.php';
 
 		$this->loader = new Citrix_Connect_Loader();
 

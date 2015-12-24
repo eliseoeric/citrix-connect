@@ -48,7 +48,7 @@ class WebinarClient {
 
     public function getRegistrationUrl( $webinar_id ) {
         $webinar = $this->getTransientWebinar( 'webinar_trans_' . $webinar_id, $webinar_id );
-        $url = $webinar['registrationurl'];
+        $url = $webinar->registrationurl;
 
         return $url;
     }
