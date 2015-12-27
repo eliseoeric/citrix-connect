@@ -6,6 +6,10 @@ class Hook_Manager {
 	protected $metabox_dir;
 	// protected $widget_dir;
 
+
+	/**
+	 * Construct the class
+     */
 	public function __construct() {
 		$this->shortcode_dir = '/shortcodes/';
 		$this->post_type_dir = '/post_types/';
