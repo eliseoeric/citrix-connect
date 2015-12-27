@@ -138,6 +138,8 @@ class Citrix_Connect {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-webinar-menu.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-training-menu.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/Citrix/WebinarClient.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/Citrix/TrainingClient.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-citrix-connect-gform-handler.php';
 
 		$this->loader = new Citrix_Connect_Loader();
 
@@ -196,6 +198,9 @@ class Citrix_Connect {
 		$this->loader->add_action( 'admin_init', $training_menu, 'init' );
 		$this->loader->add_action( 'admin_menu', $training_menu, 'add_options_page' );
 		$this->loader->add_action( 'cmb2_admin_init', $training_menu, 'add_options_page_metabox' );
+
+		$gform_handler = new Citrix_Connect_Gform_Handler();
+		$gform_handler->register_hooks();
 	}
 
 	/**

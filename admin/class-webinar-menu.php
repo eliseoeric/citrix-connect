@@ -77,6 +77,16 @@ class Webinar_Menu extends Admin_Menu {
 		}
 	}
 
+	public function get_gravity_forms() {
+		$forms = RGFormsModel::get_forms( null, 'title' );
+		$form_array = array();
+		foreach( $forms as $form ) {
+			$form_array[$form->id] = $form->title;
+		}
+
+		return $form_array;
+	}
+
 	public function add_options_page_metabox() {
 		// hook in the save notices
 		add_action( "cmb2_save_options-page_fields_{$this->metabox_id}", array( $this, 'settings_notices' ), 10, 2 );
@@ -115,5 +125,23 @@ class Webinar_Menu extends Admin_Menu {
 			'id'      => $this->prefix . 'webinar_org_id',
 			'type'    => 'text'
 		) );
+
+		if( class_exists(RGFormsModel) ) {
+			$cmb->add_field( array(
+				'name' => __( 'Gravity Form Registration ID', 'citrix-connect' ),
+				'desc' => __( 'Indicate which form is used for GoToWebinar Registration.', 'citrix-connect' ),
+				'id' => $this->prefix . 'gform_webinar_reg_id',
+				'type' => 'select',
+				'show_option_none' => true,
+				'options' => $this->get_gravity_forms()
+			));
+
+			$cmb->add_field( array(
+				'name'    => __( 'Registration Error Message', 'citrix-connect' ),
+				'desc'    => __( 'The error message displayed to users should the Citrix API registration fail.', 'citrix-connect' ),
+				'id'      => $this->prefix . 'webinar_error',
+				'type'    => 'wysiwyg'
+			) );
+		}
 	}
 }

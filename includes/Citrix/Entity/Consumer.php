@@ -68,6 +68,7 @@ class Consumer extends EntityAbstract implements EntityAware
    * @var String
    */
   public $timeZone = 'America/New_York';
+
   /**
    * Begin here by injecting authentication object.
    *
@@ -84,9 +85,15 @@ class Consumer extends EntityAbstract implements EntityAware
   public function populate()
   {
     $data = $this->getData();
-    
-    $this->firstName = $data['firstName'];
-    $this->lastName = $data['lastName'];
+
+    if( isset( $data['givenName' ] ) ) {
+      $this->firstName = $data['givenName'];
+      $this->lastName = $data['surname'];
+    } else {
+      $this->firstName = $data['firstName'];
+      $this->lastName = $data['lastName'];
+    }
+
     $this->email = $data['email'];
     
     if (isset($data['registrantKey'])) {
