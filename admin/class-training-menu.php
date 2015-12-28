@@ -82,6 +82,13 @@ class Training_Menu extends Admin_Menu {
 				'show_option_none' => true,
 				'options' => $this->get_gravity_forms()
 			));
+
+			$cmb->add_field( array(
+				'name'    => __( 'Registration Error Message', 'citrix-connect' ),
+				'desc'    => __( 'The error message displayed to users should the Citrix API registration fail.', 'citrix-connect' ),
+				'id'      => $this->prefix . 'training_error',
+				'type'    => 'wysiwyg'
+			) );
 		}
 
 

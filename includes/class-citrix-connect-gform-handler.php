@@ -38,16 +38,12 @@ class Citrix_Connect_Gform_Handler {
 
 
     }
-    /*
-     * Register the consumer with the webinar. Returns and error if unable to register
-     *
-     */
-
 
     /**
+     * Register the consumer with the webinar. Returns and error if unable to register
      * @param $confirmation The confirmation string set in the Gravity Form GUI
-     * @param $form The Gravity Forms form object
-     * @param $entry The user submitted entry
+     * @param $form - The Gravity Forms form object
+     * @param $entry - The user submitted entry
      * @return string - the modified confirmation
      */
     public function webinar_form_confirmation( $confirmation, $form, $entry ) {
@@ -55,7 +51,7 @@ class Citrix_Connect_Gform_Handler {
         $citrix_data = $this->map_citrix_data( $form['fields'], $entry );
         // Get the webinar key from the entry data -- use the entry data because a notification can be forced
         // after the inital submission, should the Citrix API fail.
-        $webinar_key = $this->get_webinar_field_from_fields( $form['fields'], $entry );
+        $webinar_key = $this->get_citrix_key_from_fields( $form['fields'], $entry );
 
         // Register the User with the Citrix API
         $webinarClient = new WebinarClient();
@@ -83,18 +79,46 @@ class Citrix_Connect_Gform_Handler {
         return $confirmation;
     }
 
+    public function training_form_confirmation( $confirmation, $form, $entry ) {
+        $citrix_data = $this->map_citrix_data( $form['fields'], $entry );
+
+        $training_key = $this->get_citrix_key_from_fields( $form['fields'], $entry );
+
+        $trainingClient = new TrainingClient();
+        $response = $trainingClient->register( $training_key, $citrix_data );
+
+        if( $response['has_errors'] ) {
+            $options = get_options( 'citrix-connect-training' );
+            $this->sendErrorEmail( $response, $citrix_data );
+
+            if( empty( $options['training_error'] ) ) {
+                $confirmation = "<p>Unfortunately, we were unable to register you for this course. Your registration information has been saved, and an administrator has been notified.</p>
+             <p>We will reach out to you shortly regarding your registration. Thank you for your patience.</p>";
+            } else {
+                $confirmation = $options['training_error'];
+            }
+        } else {
+            $confirmation .= "<p>Your JoinUrl is <a href='" . $response['joinUrl'] ."'>" .$response['joinUrl'] . "</a>";
+        }
+
+        return $confirmation;
+    }
+
     /**
-     * Get the webinar key from the user submitted entry. This does not use
+     * Get the webinar/training key from the user submitted entry. This does not use
      * the post_meta because this can be run via the admin panel when an admin
      * forces notification should the Citrix API fail.
      *
-     * @param $fields Fields registered in the Gravity Forms object
-     * @param $entry User submitted data
+     * @param $fields - Fields registered in the Gravity Forms object
+     * @param $entry - User submitted data
      * @return string - the Webinar Key from the Gravity Forms Entry
      */
-    public function get_webinar_field_from_fields( $fields, $entry ) {
+    public function get_citrix_key_from_fields( $fields, $entry ) {
         foreach( $fields as $field ) {
             if( $field->adminLabel == 'webinar_key' ) {
+                return $entry[$field->id];
+            }
+            if( $field->adminLabel == 'training_key' ) {
                 return $entry[$field->id];
             }
         }
@@ -105,8 +129,8 @@ class Citrix_Connect_Gform_Handler {
      * and the Citrix Consumer data. Designed as an error message, can be extended
      * to send any message.
      *
-     * @param $response The response from the Citrix API
-     * @param $citrix_data The registration info from the Citrix Consumer
+     * @param $response  - The response from the Citrix API
+     * @param $citrix_data - The registration info from the Citrix Consumer
      */
     public function sendErrorEmail( $response, $citrix_data ) {
         $to = get_option( 'admin_email' );
@@ -126,9 +150,9 @@ class Citrix_Connect_Gform_Handler {
 
 
     /**
-     * @param $fields The Gravity Forms fields from a Form object
-     * @param $entry The user submitted data
-     * @return array The user submitted data, mapped to the relevant input names for Citrix API
+     * @param $fields - The Gravity Forms fields from a Form object
+     * @param $entry - The user submitted data
+     * @return array - The user submitted data, mapped to the relevant input names for Citrix API
      */
     public function map_citrix_data( $fields, $entry ){
         $citrix_data = array();
@@ -153,6 +177,14 @@ class Citrix_Connect_Gform_Handler {
 
             if( $field->adminLabel == 'companyUrl' ) {
                 $citrix_data['companyUrl'] = $entry[$field->id];
+            }
+
+            if( $field->adminLabel == 'givenName' ) {
+                $citrix_data['givenName'] = $entry[$field->id];
+            }
+
+            if( $field->adminLabel == 'surname' ) {
+                $citrix_data['surname'] = $entry[$field->id];
             }
         }
 

@@ -95,6 +95,18 @@ class TrainingClient
 		return $training;
 	}
 
+	public function register( $training_key, $registrantData ) {
+		$goToTraining = new GoToTraining( $this->client );
+
+		$response = $goToTraining->register( $training_key, $registrantData );
+		if( $goToTraining->hasErrors() ) {
+			$response = array( 'has_errors' => true, 'errors' => $goToTraining->getErrors() );
+		} else {
+			$response = array( 'has_errors' => false, 'joinUrl' => $goToTraining->joinUrl );
+		}
+		return $response;
+	}
+
 	public function getOnlineRecordings( $training_id ) {
 		$goToTraining = new GoToTraining( $this->client );
 
