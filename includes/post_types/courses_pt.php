@@ -1,7 +1,7 @@
 <?php
 function register_courses() {
     // creating (registering) the custom type
-    register_post_type( 'course', /* (http://codex.wordpress.org/Function_Reference/register_post_type) */
+    register_post_type( 'citrix_training', /* (http://codex.wordpress.org/Function_Reference/register_post_type) */
         // let's now add all the options for this post type
         array ( 'labels'              => array (
             'name'               => __( 'Courses', 'citirx-connect' ), /* This is the Title of the Group */

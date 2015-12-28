@@ -80,11 +80,11 @@ class GoToTraining extends ServiceAbstract implements CitrixApiAware
     public function getRegistrants( $trainingKey )
     {   
         $organizerKey = $this->getClient()->getOrganizerKey();
-        $url = $this->getApiUrl . "organizers/{$organizerKey}/trainings/{$trainingKey}/registrants";
+        $url = $this->getApiUrl() . "organizers/{$organizerKey}/trainings/{$trainingKey}/registrants";
         
         $this->setHttpMethod( 'GET' )
             ->setUrl( $url )
-            ->setRequest( $this->getClient()->getAccessToken() )
+            ->sendRequest( $this->getClient()->getAccessToken() )
             ->processResponse();
 
         return $this->getResponse();
@@ -93,7 +93,7 @@ class GoToTraining extends ServiceAbstract implements CitrixApiAware
     public function getRegistrant( $trainingKey, $registrantKey )
     {   
         $organizerKey = $this->getClient()->getOrganizerKey();
-        $url = "organizers/{$organizerKey}/trainings/{$trainingKey}/registrants/{$registrantKey}";
+        $url = $this->getApiUrl() . "organizers/{$organizerKey}/trainings/{$trainingKey}/registrants/{$registrantKey}";
 
         $this->setHttpMethod( 'GET' )
             ->setUrl( $url )
@@ -169,7 +169,7 @@ class GoToTraining extends ServiceAbstract implements CitrixApiAware
     public function processResponse($single = false){
         $response = $this->getResponse();
         $this->reset();
-
+//        dd($response);
         if(isset($response['int_err_code'])){
             $this->addError($response['msg']);
         }
@@ -189,6 +189,9 @@ class GoToTraining extends ServiceAbstract implements CitrixApiAware
                 $training = new Consumer($this->getClient());
                 $training->setData($response)->populate();
                 $this->setResponse($training);
+            }
+            if( isset( $response['recordingList'] ) ) {
+                // need to build out a recording class I supose.
             }
         } else {
             $collection = new \ArrayObject(array());

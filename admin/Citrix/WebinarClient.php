@@ -102,6 +102,18 @@ class WebinarClient {
         return $webinar;
     }
 
+    public function register( $webinar_key, $registrantData ) {
+        $goToWebinar = new GoToWebinar( $this->client );
+
+        $response = $goToWebinar->register( $webinar_key, $registrantData );
+        if( $goToWebinar->hasErrors() ) {
+            $response = array( 'has_errors' => true, 'errors' => $goToWebinar->getErrors() );
+        } else {
+            $response = array( 'has_errors' => false, 'joinUrl' => $goToWebinar->joinUrl );
+        }
+        return $response;
+    }
+
     public function getClient() {
         return $this->client;
     }

@@ -63,6 +63,12 @@ class Training extends EntityAbstract implements EntityAware
 	 */
 	public $consumers;
 	/**
+	 * List of organizers for that training.
+	 *
+	 * @var \ArrayObject
+	 */
+	public $organizers;
+	/**
 	 * Beging here by injecting an authentication object.
 	 *
 	 * @param $client
@@ -85,6 +91,7 @@ class Training extends EntityAbstract implements EntityAware
 		$this->organizers = $data['organizers'];
 		$this->times = $data['times'];
 		$this->timeZone = $data['timeZone'];
+		$this->organizers = $data['organizers'];
 //		$this->registrationUrl = isset($data['registrationUrl']) ? $data['registrationUrl'] : null;
 		return $this;
 	}
@@ -255,5 +262,17 @@ class Training extends EntityAbstract implements EntityAware
 		$this->registrationUrl = $registrationUrl;
 
 		return $this;
+	}
+
+	public function setOrganizers( $organizers )
+	{
+		$this->organizers = $organizers;
+
+		return $this;
+	}
+
+	public function getOrganizers()
+	{
+		return $this->organizers;
 	}
 }

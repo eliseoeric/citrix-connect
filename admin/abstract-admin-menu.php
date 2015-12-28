@@ -34,7 +34,7 @@ abstract class Admin_Menu {
 	public function admin_page_display() {
 		?>
 		<div class='wrap cmb2-options-page <?= $this->key ?>'>
-			<h2> <?= esc_html( get_admin_page_title() ) ?></h2>
+			<h2> <?php //esc_html( get_admin_page_title() ) ?></h2>
 			<?php cmb2_metabox_form( $this->metabox_id, $this->key ); ?>
 			<?php // add a hook for debug feedback. ?>
 			<?php do_action( 'admin_page_display_debug_' . $this->key ); ?>
