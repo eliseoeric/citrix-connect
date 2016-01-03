@@ -126,7 +126,9 @@ class Webinar_Menu extends Admin_Menu {
 			'type'    => 'text'
 		) );
 
-		if( class_exists(RGFormsModel) ) {
+		$gravity_forms = '/gravityforms/gravityforms.php';
+
+		if( is_plugin_active( $gravity_forms ) ) {
 			$cmb->add_field( array(
 				'name' => __( 'Gravity Form Registration ID', 'citrix-connect' ),
 				'desc' => __( 'Indicate which form is used for GoToWebinar Registration.', 'citrix-connect' ),
