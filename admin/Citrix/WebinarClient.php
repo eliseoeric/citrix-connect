@@ -53,7 +53,7 @@ class WebinarClient {
 
     public function getTimes( $webinar_id ) {
         $webinar = $this->getTransientWebinar( 'webinar_trans_' . $webinar_id, $webinar_id );
-        $times = $webinar['times'];
+        $times = $webinar->times;
 
         return $times;
     }
@@ -68,7 +68,7 @@ class WebinarClient {
 
     public function getDescription( $webinar_id ) {
         $webinar = $this->getTransientWebinar( 'webinar_trans_' . $webinar_id, $webinar_id );
-        $desc = $webinar['description'];
+        $desc = $webinar->description;
 
         return $desc;
     }

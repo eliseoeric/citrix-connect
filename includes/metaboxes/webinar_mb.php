@@ -34,6 +34,14 @@ function webinar_mb( $meta_boxes ) {
         'options' => array()
     ) );
 
+    $webinar->add_field( array(
+        'name' => 'PDF Url',
+//        'desc' => 'Extra content that is below the hero',
+        'id' => $prefix . 'webinar_pdf',
+        'type' => 'text_url',
+        'options' => array()
+    ) );
+
 //    $webinar_meta = new_cmb2_box(
 //        array(
 //            'id'         => 'webinar-data',
