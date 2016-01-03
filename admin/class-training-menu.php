@@ -73,7 +73,7 @@ class Training_Menu extends Admin_Menu {
 			'type'    => 'text'
 		) );
 
-		$gravity_forms = '/gravityforms/gravityforms.php';
+		$gravity_forms = 'gravityforms/gravityforms.php';
 
 		if( is_plugin_active( $gravity_forms ) ) {
 			$cmb->add_field( array(
