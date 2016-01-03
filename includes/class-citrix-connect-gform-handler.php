@@ -59,6 +59,7 @@ class Citrix_Connect_Gform_Handler {
 
         // Check for errors
         if( $response['has_errors'] ) {
+
             // Get the Admin Options for the Citrix Connect Webinar
             $options = get_option( 'citrix-connect-webinar' );
             //Notifiy the admin of failed registration
@@ -73,8 +74,7 @@ class Citrix_Connect_Gform_Handler {
             }
 
         } else {
-            // Add the user's join url to the confirmation message
-            $confirmation .= "<p>Your JoinUrl is: <a href='" . $response['joinUrl'] ."'>" .$response['joinUrl'] . "</a>";
+
         }
         return $confirmation;
     }
@@ -98,7 +98,7 @@ class Citrix_Connect_Gform_Handler {
                 $confirmation = $options['training_error'];
             }
         } else {
-            $confirmation .= "<p>Your JoinUrl is <a href='" . $response['joinUrl'] ."'>" .$response['joinUrl'] . "</a>";
+
         }
 
         return $confirmation;
@@ -115,10 +115,10 @@ class Citrix_Connect_Gform_Handler {
      */
     public function get_citrix_key_from_fields( $fields, $entry ) {
         foreach( $fields as $field ) {
-            if( $field->adminLabel == 'webinar_key' ) {
+            if( $field->label == 'webinar_key' ) {
                 return $entry[$field->id];
             }
-            if( $field->adminLabel == 'training_key' ) {
+            if( $field->label == 'training_key' ) {
                 return $entry[$field->id];
             }
         }
@@ -144,7 +144,6 @@ class Citrix_Connect_Gform_Handler {
         }
         $errors .= "</ul>";
         $body .= $errors;
-
         wp_mail( $to, $subject, $body, $headers );
     }
 
@@ -159,32 +158,17 @@ class Citrix_Connect_Gform_Handler {
 
         // Loop through the fields, re-label them
         foreach( $fields as $field ) {
-            if( $field->adminLabel == 'firstName' ) {
-                $citrix_data['firstName'] = $entry[$field->id];
+
+            if( $field->adminLabel != '' ) {
+                $citrix_data[$field->adminLabel] = $entry[$field->id];
             }
 
-            if( $field->adminLabel == 'lastName' ) {
-                $citrix_data['lastName'] = $entry[$field->id];
-            }
-
-            if( $field->adminLabel == 'email' ) {
-                $citrix_data['email'] = $entry[$field->id];
-            }
-
-            if( $field->adminLabel == 'phone' ) {
-                $citrix_data['phone'] = $entry[$field->id];
-            }
-
-            if( $field->adminLabel == 'companyUrl' ) {
-                $citrix_data['companyUrl'] = $entry[$field->id];
-            }
-
-            if( $field->adminLabel == 'givenName' ) {
-                $citrix_data['givenName'] = $entry[$field->id];
-            }
-
-            if( $field->adminLabel == 'surname' ) {
-                $citrix_data['surname'] = $entry[$field->id];
+            if($field->type == 'address' ) {
+                $citrix_data['address'] = $entry[$field->inputs[0]['id']];
+                $citrix_data['city'] = $entry[$field->inputs[2]['id']];
+                $citrix_data['state'] = $entry[$field->inputs[3]['id']];
+                $citrix_data['zipCode'] = $entry[$field->inputs[4]['id']];
+                $citrix_data['country'] = $entry[$field->inputs[5]['id']];
             }
         }
 

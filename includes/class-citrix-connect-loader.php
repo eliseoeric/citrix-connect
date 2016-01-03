@@ -60,6 +60,7 @@ class Citrix_Connect_Loader {
 		$this->shortcodes = array(
 			'webinar_title',
 			'training_title',
+			'webinar_registration'
 		);
 		$this->post_types = array(
 			'webinar_pt',

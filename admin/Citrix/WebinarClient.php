@@ -48,7 +48,7 @@ class WebinarClient {
 
     public function getRegistrationUrl( $webinar_id ) {
         $webinar = $this->getTransientWebinar( 'webinar_trans_' . $webinar_id, $webinar_id );
-        $url = $webinar->registrationurl;
+        $url = $webinar->registrationUrl;
 
         return $url;
     }
@@ -106,6 +106,7 @@ class WebinarClient {
         $goToWebinar = new GoToWebinar( $this->client );
 
         $response = $goToWebinar->register( $webinar_key, $registrantData );
+
         if( $goToWebinar->hasErrors() ) {
             $response = array( 'has_errors' => true, 'errors' => $goToWebinar->getErrors() );
         } else {

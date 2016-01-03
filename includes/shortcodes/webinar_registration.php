@@ -25,7 +25,8 @@ function citrix_connect_webinar_url ($atts, $content ) {
     if( '' === $title ) {
         //Init the webinar client
         $webinarAPI = new WebinarClient();
-        $title = $webinarAPI->getTitle( $id );
+        $url = $webinarAPI->getRegistrationUrl( $id );
+        dd($url);
     }
 
     //Wrap the title in the given tag
