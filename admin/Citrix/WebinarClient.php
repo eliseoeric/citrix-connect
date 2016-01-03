@@ -39,9 +39,7 @@ class WebinarClient {
 
     public function getTitle( $webinar_id ) {
         $webinar = $this->getTransientWebinar( 'webinar_trans_' . $webinar_id, $webinar_id );
-
         $title = $webinar->subject;
-
         return $title;
 
     }
