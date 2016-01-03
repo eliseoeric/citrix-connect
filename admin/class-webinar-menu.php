@@ -2,7 +2,7 @@
 // namespace Admin;
 // use Admin\Admin_Menu;
 // use Admin\Citrix\WebinarClient;
-
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 class Webinar_Menu extends Admin_Menu {
 
 	public function __construct() {
