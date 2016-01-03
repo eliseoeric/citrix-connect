@@ -36,8 +36,18 @@ class Citrix_Connect_Gform_Handler {
             add_filter( 'gform_field_value_training_key', array( $this, 'populate_training_key' ) );
         }
 
+        add_filter( 'query_vars', array($this, 'add_citrix_query_vars' ) );
+
 
     }
+
+    public function add_citrix_query_vars( $vars ) {
+        $vars[] = "webinar";
+        $vars[] = "course";
+
+        return $vars;
+    }
+
 
     /**
      * Register the consumer with the webinar. Returns and error if unable to register
@@ -181,7 +191,14 @@ class Citrix_Connect_Gform_Handler {
      * from the post meta - you may also use url query vars
      * */
     public function populate_webinar_key( $value ) {
-        $webinar_key = get_post_meta( get_the_ID(), 'webinar_key', true );
+        $url_query = get_query_var( 'webinar' );
+        
+        if( $url_query ) {
+            $webinar_key = $url_query;
+        } else {
+            $webinar_key = get_post_meta( get_the_ID(), 'webinar_key', true );
+        }
+        
         return $webinar_key;
     }
 
