@@ -85,8 +85,17 @@ class WebinarClient {
 
     }
 
-    public function isPast( $id ) {
+    public function isPast( $webinar_id ) {
+        $webinar = $this->getTransientWebinar( 'webinar_trans_' . $webinar_id, $webinar_id );
+        $url = $webinar->registrationUrl;
 
+        if( $url == '' ) {
+            $bool = true;
+        } else {
+            $bool = false;
+        }
+
+        return $bool;
     }
 
     public function getTransientWebinar( $trasient_key, $webinar_id ) {
