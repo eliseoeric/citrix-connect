@@ -33,6 +33,22 @@ function course_mb( $meta_boxes ) {
         'type' => 'text',
         'options' => array()
     ) );
+
+    $webinar->add_field( array(
+        'name' => 'Course Price',
+//        'desc' => 'Extra content that is below the hero',
+        'id' => $prefix . 'course_price',
+        'type' => 'text',
+        'options' => array('before' => '$')
+    ) );
+
+    $webinar->add_field( array(
+        'name' => 'Course Discount',
+//        'desc' => 'Extra content that is below the hero',
+        'id' => $prefix . 'course_discount',
+        'type' => 'text',
+        'options' => array('before' => '$')
+    ) );
 }
 
 function training_add_registrants_metabox() {

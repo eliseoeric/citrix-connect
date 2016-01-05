@@ -192,7 +192,7 @@ class Citrix_Connect_Gform_Handler {
      * */
     public function populate_webinar_key( $value ) {
         $url_query = get_query_var( 'webinar' );
-        
+
         if( $url_query ) {
             $webinar_key = $url_query;
         } else {
@@ -207,7 +207,14 @@ class Citrix_Connect_Gform_Handler {
      * from the post meta - you may also use url query vars
      * */
     public function populate_training_key( $value ) {
-        $training_key = get_post_meta( get_the_ID(), 'training_key', true );
+        $url_query = get_query_var( 'course' );
+
+        if( $url_query ) {
+            $training_key = $url_query;
+        } else {
+            $training_key = get_post_meta( get_the_ID(), 'training_key', true );
+        }
+
         return $training_key;
     }
 

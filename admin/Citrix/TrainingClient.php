@@ -48,7 +48,7 @@ class TrainingClient
 
 	public function getTimes( $training_id ) {
         $training = $this->getTransientTraining( 'training_trans_' . $training_id, $training_id );
-        $times = $training['times'];
+        $times = $training->times;
 
         return $times;
     }
@@ -64,7 +64,7 @@ class TrainingClient
 
     public function getDescription( $training_id ) {
         $training = $this->getTransientTraining( 'training_trans_' . $training_id, $training_id );
-        $desc = $training['description'];
+        $desc = $training->description;
 
         return $desc;
     }
@@ -73,7 +73,18 @@ class TrainingClient
 
     }
 
-    public function isPast( $id ) {
+    public function isPast( $training_id ) {
+    	$training_times = $this->getTimes( $training_id );
+    	end($training_times);
+        $key = key($training_times);
+        $end = date('l, jS \of M Y', strtotime($training_times[$key]['startDate']));
+        $today = date('l, jS \of M Y');
+
+        if( $end < $today ) {
+        	return true;
+        } else {
+        	return false;
+        }
 
     }
 
