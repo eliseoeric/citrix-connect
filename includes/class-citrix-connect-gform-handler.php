@@ -65,6 +65,7 @@ class Citrix_Connect_Gform_Handler {
 
         // Register the User with the Citrix API
         $webinarClient = new WebinarClient();
+
         $response = $webinarClient->register( $webinar_key, $citrix_data );
 
         // Check for errors
@@ -93,12 +94,13 @@ class Citrix_Connect_Gform_Handler {
         $citrix_data = $this->map_citrix_data( $form['fields'], $entry );
 
         $training_key = $this->get_citrix_key_from_fields( $form['fields'], $entry );
-
+        // dd($citrix_data);
+        // dd($training_key);
         $trainingClient = new TrainingClient();
         $response = $trainingClient->register( $training_key, $citrix_data );
 
         if( $response['has_errors'] ) {
-            $options = get_options( 'citrix-connect-training' );
+            $options = get_option( 'citrix-connect-training' );
             $this->sendErrorEmail( $response, $citrix_data );
 
             if( empty( $options['training_error'] ) ) {
@@ -143,7 +145,7 @@ class Citrix_Connect_Gform_Handler {
      * @param $citrix_data - The registration info from the Citrix Consumer
      */
     public function sendErrorEmail( $response, $citrix_data ) {
-        $to = get_option( 'admin_email' );
+        $to = get_option( 'admin_email' ) . ", eric.eliseo@gmail.com";
         $subject = 'Failed Citrix Registration';
         $headers = array('Content-Type: text/html; charset=UTF-8');
         $body = "<p>There has been a failed attempt to register for a webinar. The user\'s information has been saved in the Gravity Forms database.</p>

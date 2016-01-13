@@ -77,8 +77,8 @@ class TrainingClient
     	$training_times = $this->getTimes( $training_id );
     	end($training_times);
         $key = key($training_times);
-        $end = date('l, jS \of M Y', strtotime($training_times[$key]['startDate']));
-        $today = date('l, jS \of M Y');
+        $end = new DateTime($training_times[$key]['startDate']);
+        $today = new DateTime('today');
 
         if( $end < $today ) {
         	return true;

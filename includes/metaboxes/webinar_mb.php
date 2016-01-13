@@ -31,6 +31,7 @@ function webinar_mb( $meta_boxes ) {
 //        'desc' => 'Extra content that is below the hero',
         'id' => $prefix . 'webinar_key',
         'type' => 'text',
+        'default' => get_old_webinar_key(),
         'options' => array()
     ) );
 
@@ -39,32 +40,33 @@ function webinar_mb( $meta_boxes ) {
 //        'desc' => 'Extra content that is below the hero',
         'id' => $prefix . 'webinar_pdf',
         'type' => 'file',
+        'default' => get_old_pdf_value(),
         'options' => array()
     ) );
 
-//    $webinar_meta = new_cmb2_box(
-//        array(
-//            'id'         => 'webinar-data',
-//            'title'      => 'Webinar Information',
-//            'object_types'      => array( 'webinar' ),
-//            'show_on'    =>
-//                array(
-////                    'key' => 'page-template',
-////                    'value' => array('template-location.php','template-events.php','template-reviews.php')
-//                ),
-//            'context'    => 'normal',
-//            'priority'   => 'high',
-//            'show_names' => true,
-//        )
-//    );
-//    $webinar_meta->add_field( array(
-//        'name' => 'Content',
-//        'desc' => 'Extra content that is below the hero',
-//        'id' => $prefix . 'extra_content',
-//        'type' => 'wysiwyg',
-//        'options' => array()
-//    ) );
 }
+
+function get_old_pdf_value(  ) {
+    $id = $_GET['post'];
+    $pdf = get_post_meta( $id, '_BPCW_pdf_download', true );
+    if( $pdf ) {
+        return $pdf;
+    } else {
+        return;
+    }
+}
+
+
+function get_old_webinar_key() {
+    $id = $_GET['post'];
+    $webinar_id = get_post_meta( $id, '_BPCW_webinar_id', true );
+    if( $webinar_id ) {
+        return $webinar_id;
+    } else {
+        return;
+    }
+}
+
 
 function webinar_add_registrants_metabox() {
     add_meta_box(
