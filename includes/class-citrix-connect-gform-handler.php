@@ -104,7 +104,11 @@ class Citrix_Connect_Gform_Handler {
             $this->sendErrorEmail( $response, $citrix_data );
 
             if( empty( $options['training_error'] ) ) {
-                $confirmation = "<p>Unfortunately, we were unable to register you for this course. Your registration information has been saved, and an administrator has been notified.</p>
+                $errors = '';
+                foreach( $response['errors'] as $error ){
+                    $errors .= "<p>" . $error . "</p>";
+                }
+                $confirmation = $errors . "<p>Unfortunately, we were unable to register you for this course. Your registration information has been saved, and an administrator has been notified.</p>
              <p>We will reach out to you shortly regarding your registration. Thank you for your patience.</p>";
             } else {
                 $confirmation = $options['training_error'];
