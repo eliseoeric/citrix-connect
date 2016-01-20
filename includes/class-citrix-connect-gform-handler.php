@@ -149,15 +149,25 @@ class Citrix_Connect_Gform_Handler {
      * and the Citrix Consumer data. Designed as an error message, can be extended
      * to send any message.
      *
-     * @param $response  - The response from the Citrix API
+     * @param $response - The response from the Citrix API
      * @param $citrix_data - The registration info from the Citrix Consumer
+     * @param $type - The type of citrix entity
      */
     public function sendErrorEmail( $response, $citrix_data, $type ) {
         $to = get_option( 'admin_email' ) . ", eric.eliseo@gmail.com";
         $subject = 'Failed Citrix Registration';
         $headers = array('Content-Type: text/html; charset=UTF-8');
+
+        if( $type == 'training' ) {
+            $firstName = $citrix_data['givenName'];
+            $lastName = $citrix_data['surname'];
+        } else {
+            $firstName = $citrix_data['firstName'];
+            $lastName = $citrix_data['lastName'];
+        }
+
         $body = "<p>There has been a failed attempt to register for a <strong>" . $type . "</strong> The user\'s information has been saved in the Gravity Forms database.</p>
-        <ul><li>Name: " . $citrix_data['firstName'] . " " .$citrix_data['lastName'] . "</li><li>Email Address: " . $citrix_data['email'] ."</li></ul>";
+        <ul><li>Name: " . $firstName . " " . $lastName . "</li><li>Email Address: " . $citrix_data['email'] ."</li></ul>";
         $errors = "<ul>";
         foreach( $response['errors'] as $error ){
             $errors .= "<li>" . $error . "</li>";
