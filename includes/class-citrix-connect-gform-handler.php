@@ -74,11 +74,15 @@ class Citrix_Connect_Gform_Handler {
             // Get the Admin Options for the Citrix Connect Webinar
             $options = get_option( 'citrix-connect-webinar' );
             //Notifiy the admin of failed registration
-            $this->sendErrorEmail( $response, $citrix_data );
+            $this->sendErrorEmail( $response, $citrix_data, 'webinar' );
 
             // Check if an error message has been set via the Admin Menu
             if( empty( $options['webinar_error'] ) ) {
-                $confirmation = "<p>Unfortunately, we were unable to register you for this webinar. Your registration information has been saved, and an administrator has been notified.</p>
+                $errors = '';
+                foreach( $response['errors'] as $error ){
+                    $errors .= "<p>" . $error . "</p>";
+                }
+                $confirmation = $errors . "<p>Unfortunately, we were unable to register you for this webinar. Your registration information has been saved, and an administrator has been notified.</p>
              <p>We will reach out to you shortly regarding your registration. Thank you for your patience.</p>";
             } else {
                 $confirmation = $options['webinar_error'];
@@ -101,7 +105,7 @@ class Citrix_Connect_Gform_Handler {
 
         if( $response['has_errors'] ) {
             $options = get_option( 'citrix-connect-training' );
-            $this->sendErrorEmail( $response, $citrix_data );
+            $this->sendErrorEmail( $response, $citrix_data, 'training' );
 
             if( empty( $options['training_error'] ) ) {
                 $errors = '';
@@ -148,11 +152,11 @@ class Citrix_Connect_Gform_Handler {
      * @param $response  - The response from the Citrix API
      * @param $citrix_data - The registration info from the Citrix Consumer
      */
-    public function sendErrorEmail( $response, $citrix_data ) {
+    public function sendErrorEmail( $response, $citrix_data, $type ) {
         $to = get_option( 'admin_email' ) . ", eric.eliseo@gmail.com";
         $subject = 'Failed Citrix Registration';
         $headers = array('Content-Type: text/html; charset=UTF-8');
-        $body = "<p>There has been a failed attempt to register for a webinar. The user\'s information has been saved in the Gravity Forms database.</p>
+        $body = "<p>There has been a failed attempt to register for a <strong>" . $type . "</strong> The user\'s information has been saved in the Gravity Forms database.</p>
         <ul><li>Name: " . $citrix_data['firstName'] . " " .$citrix_data['lastName'] . "</li><li>Email Address: " . $citrix_data['email'] ."</li></ul>";
         $errors = "<ul>";
         foreach( $response['errors'] as $error ){
