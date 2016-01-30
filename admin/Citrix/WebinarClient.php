@@ -28,11 +28,16 @@ class WebinarClient {
             $client->auth( $this->getUsername(), $this->getPassword() );
 
             if($client->hasErrors()) {
-                throw new \Exception( $client->getError() );
+                if( WP_DEBUG == true ) {
+                    throw new \Exception( $client->getError() );
+                } else {
+                    new WP_Error( $client->getError() );
+                }
             }   
 
             set_transient( 'goToWebinarClient', $client, DAY_IN_SECONDS );
-        }    
+        }
+        // dd($client);    
 
         return $client;
     }
